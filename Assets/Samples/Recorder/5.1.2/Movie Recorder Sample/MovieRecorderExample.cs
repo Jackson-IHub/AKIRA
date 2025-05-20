@@ -50,11 +50,8 @@ namespace UnityEngine.Recorder.Examples
             {
                 Directory.CreateDirectory(directoryPath);
             }
-            
-
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             path = Path.Combine(path, "AkiraRecordings");
-            Debug.Log(path);
 
             // Video
             m_Settings = ScriptableObject.CreateInstance<MovieRecorderSettings>();
@@ -90,8 +87,6 @@ namespace UnityEngine.Recorder.Examples
             RecorderOptions.VerboseMode = false;
             m_RecorderController.PrepareRecording();
             m_RecorderController.StartRecording();
-
-            Debug.Log($"Started recording for file {OutputFile.FullName}");
         }
 
         void OnDisable()

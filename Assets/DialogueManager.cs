@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using System.Collections;
 public class DialogueManager : MonoBehaviour
 {
+    private bool onStart = false;
     public bool dialogueFinished = false;
     public TextAsset textFileStart;
 
@@ -16,7 +17,6 @@ public class DialogueManager : MonoBehaviour
 
     public GameObject adultTextBubble;
     public GameObject childTextBubble;
-    bool adultSpeaking;
 
     private Queue<string> dialogue = new Queue<string>();
     private List<int> whoIsSpeaking = new List<int>();
@@ -36,28 +36,17 @@ public class DialogueManager : MonoBehaviour
     string animationTag = "";
 
     private bool animationPlaying;
-
-    public void Start()
-    {
-        ReadTextFile();
-    }
-
     private void PrintDialogue()
     {
-        adultSpeaking = false;
-
-        if (dialogue.Count == 0) // special phrase to stop dialogue
+        if (dialogue.Count == 0)
         {
             Debug.Log("end of dialogue");
             EndDialogue();
             return;
         }
-
         adultTextMesh.text = "";
         childTextMesh.text = "";
-
         StartCoroutine(PrintOutText());
-
         if (lineNumber == 0)
         {
             childTextBubble.SetActive(false);
@@ -73,10 +62,7 @@ public class DialogueManager : MonoBehaviour
     {
         int numberOfCharacters = dialogue.Peek().Length;
         isTyping = true;
-
-        
         bool foundTag = false;
-        
 
         for (int i = 0; i < numberOfCharacters; i++)
         {
@@ -93,7 +79,6 @@ public class DialogueManager : MonoBehaviour
                 {
                     animationTag += dialogue.Peek()[i];
                 }
-                
                 if(foundTag == false)
                 {
                     i++;
@@ -101,7 +86,6 @@ public class DialogueManager : MonoBehaviour
                 yield return new WaitForSeconds(0f);
             }
             yield return new WaitForSeconds(0.005f);
-
             if (whoIsSpeaking[lineNumber] == 1 && foundTag == false)
             {
                 if (animationTag == "Anger" && animationPlaying == false)
@@ -149,6 +133,11 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space) && onStart == false)
+        {
+            onStart = true;
+            ReadTextFile();
+        }
         if (Input.GetKeyUp(KeyCode.Space) && dialogueFinished == false && isTyping == false)
         {
             AdvanceDialogue();
@@ -186,7 +175,7 @@ public class DialogueManager : MonoBehaviour
                 }
                 else
                 {
-                    dialogue.Enqueue(line); // adds to the dialogue to be printed
+                    dialogue.Enqueue(line);
                     whoIsSpeaking.Add(whoIsSpeaking[whoIsSpeaking.Count - 1]);
                 }
             }

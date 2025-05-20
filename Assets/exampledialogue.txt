@@ -6,7 +6,7 @@ Dad: <Anger>Help? By ignoring what I said?
 
 Son: <Sadness>I thought it was the right thing to do.
 
-Son: <Sadness>I didn't mean to upset you.
+<Sadness>I didn't mean to upset you.
 
 Dad: <Anger>You crossed the line!
 

@@ -4575,6 +4575,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2464626077810303255, guid: 2f324451dd67b7f4eb6c9ee63207860f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4616932545422647150, guid: 2f324451dd67b7f4eb6c9ee63207860f, type: 3}
       propertyPath: isChild
       value: 1
@@ -4690,6 +4694,10 @@ PrefabInstance:
     - target: {fileID: 3938490338891160787, guid: 60c61731ff573404aa1f7bb4be390e14, type: 3}
       propertyPath: m_Name
       value: Adult
+      objectReference: {fileID: 0}
+    - target: {fileID: 4211531011796352420, guid: 60c61731ff573404aa1f7bb4be390e14, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

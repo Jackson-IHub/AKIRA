@@ -66,7 +66,8 @@ namespace UnityEngine.Recorder.Examples
             };
 
             // Simple file name (no wildcards) so that FileInfo constructor works in OutputFile getter.
-            m_Settings.OutputFile = mediaOutputFolder.FullName + "/" + "video";
+            var directory = Directory.GetFiles(mediaOutputFolder.ToString());
+            m_Settings.OutputFile = mediaOutputFolder.FullName + "/" + "video" + directory.Length;
 
             // Setup Recording
             controllerSettings.AddRecorderSettings(m_Settings);

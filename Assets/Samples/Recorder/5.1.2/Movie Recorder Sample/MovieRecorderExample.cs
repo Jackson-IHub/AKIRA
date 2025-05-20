@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using System;
 using System.ComponentModel;
 using System.IO;
 using UnityEditor;
@@ -23,6 +24,8 @@ namespace UnityEngine.Recorder.Examples
         RecorderController m_RecorderController;
         public bool m_RecordAudio = true;
         internal MovieRecorderSettings m_Settings = null;
+        string filePath = "D:\\AkiraRecordings";
+        
 
         public FileInfo OutputFile
         {
@@ -42,9 +45,16 @@ namespace UnityEngine.Recorder.Examples
         {
             var controllerSettings = ScriptableObject.CreateInstance<RecorderControllerSettings>();
             m_RecorderController = new RecorderController(controllerSettings);
+            string directoryPath = Path.GetDirectoryName(filePath);
+            if(!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+            
 
-            var mediaOutputFolder = new DirectoryInfo(Path.Combine(Application.dataPath, "..", "SampleRecordings"));
-            Debug.Log(mediaOutputFolder);
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            path = Path.Combine(path, "AkiraRecordings");
+            Debug.Log(path);
 
             // Video
             m_Settings = ScriptableObject.CreateInstance<MovieRecorderSettings>();
@@ -66,8 +76,11 @@ namespace UnityEngine.Recorder.Examples
             };
 
             // Simple file name (no wildcards) so that FileInfo constructor works in OutputFile getter.
-            var directory = Directory.GetFiles(mediaOutputFolder.ToString());
-            m_Settings.OutputFile = mediaOutputFolder.FullName + "/" + "video" + directory.Length;
+
+            DateTime today = DateTime.Now;
+            string time = today.ToString("u");
+            time = time.Remove(time.Length-4, 4);
+            m_Settings.OutputFile = path + "/AkiraVideo " + time;
 
             // Setup Recording
             controllerSettings.AddRecorderSettings(m_Settings);
